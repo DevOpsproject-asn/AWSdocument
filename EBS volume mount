@@ -1,0 +1,28 @@
+EBS Volume mount process:
+------------------------
+Step-1 : Create a volume ( EBS ) 
+step-2 : Attach with same region ec2-instance 
+step-3 : Need to cross check the volume attached with instance or not by command 
+     $lsblk
+     $df -TH ( not show the file system) 
+step-4 : Make it with file system
+    $sudo file -s /dev/xvdf
+    $sudo lsblk -s  ( to check it)
+    $sudo mkfs -t xfs /dev/xvdf
+step-5: Create a folder and mount with new volume 
+    $mkdir data
+    $sudo mount /dev/xvdf /data
+  Reboot the system 
+step-6: permantly add the file system /etc/fstab
+   firstly take the UUID for the new disk
+    $ blkid
+   then update on /etc/fstab
+   $ vi /etc/fstab
+   UUID=043503c7-dd5f-4d05-9c56-a9f858de70db /testm  xfs  defaults,nofail  0  2
+step-7: Reboot the system and cross check 
+   $umount /data
+   $mount -a    ( Automatic will attach the data folder with new disk )
+
+
+
+
